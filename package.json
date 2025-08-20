@@ -1,0 +1,154 @@
+{
+  "name": "midi-vscode-shortcuts",
+  "displayName": "MIDI VSCode Shortcuts",
+  "description": "Map MIDI controller inputs to VSCode commands for tactile development workflow control",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "midiShortcuts.openConfiguration",
+        "title": "Open MIDI Configuration",
+        "category": "MIDI Shortcuts"
+      },
+      {
+        "command": "midiShortcuts.selectDevice",
+        "title": "Select MIDI Device",
+        "category": "MIDI Shortcuts"
+      },
+      {
+        "command": "midiShortcuts.startListening",
+        "title": "Start MIDI Listening",
+        "category": "MIDI Shortcuts"
+      },
+      {
+        "command": "midiShortcuts.stopListening",
+        "title": "Stop MIDI Listening",
+        "category": "MIDI Shortcuts"
+      },
+      {
+        "command": "midiShortcuts.exportConfiguration",
+        "title": "Export MIDI Configuration",
+        "category": "MIDI Shortcuts"
+      },
+      {
+        "command": "midiShortcuts.importConfiguration",
+        "title": "Import MIDI Configuration",
+        "category": "MIDI Shortcuts"
+      }
+    ],
+    "configuration": {
+      "title": "MIDI Shortcuts",
+      "properties": {
+        "midiShortcuts.device": {
+          "type": "object",
+          "default": {
+            "selectedDeviceId": null,
+            "autoConnect": true,
+            "enableLogging": false
+          },
+          "description": "MIDI device settings",
+          "properties": {
+            "selectedDeviceId": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "description": "ID of the selected MIDI device"
+            },
+            "autoConnect": {
+              "type": "boolean",
+              "description": "Automatically connect to the selected device on startup"
+            },
+            "enableLogging": {
+              "type": "boolean",
+              "description": "Enable detailed logging for debugging"
+            }
+          }
+        },
+        "midiShortcuts.mappings": {
+          "type": "array",
+          "default": [],
+          "description": "MIDI input to VSCode command mappings",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "description": "Unique identifier for the mapping"
+              },
+              "midiInput": {
+                "type": "object",
+                "description": "MIDI input configuration",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "note",
+                      "controlChange"
+                    ]
+                  },
+                  "channel": {
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 16
+                  },
+                  "note": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 127
+                  },
+                  "controller": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 127
+                  }
+                }
+              },
+              "command": {
+                "type": "string",
+                "description": "VSCode command to execute"
+              },
+              "description": {
+                "type": "string",
+                "description": "Human-readable description of the mapping"
+              },
+              "enabled": {
+                "type": "boolean",
+                "description": "Whether this mapping is active"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.74.0",
+    "@types/node": "16.x",
+    "@typescript-eslint/eslint-plugin": "^5.45.0",
+    "@typescript-eslint/parser": "^5.45.0",
+    "eslint": "^8.28.0",
+    "typescript": "^4.9.4"
+  },
+  "dependencies": {
+    "midi": "^2.0.0"
+  }
+}
