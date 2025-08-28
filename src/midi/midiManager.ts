@@ -294,7 +294,7 @@ export class MidiManager extends EventEmitter {
 
         switch (messageType) {
             case MIDI_CONSTANTS.NOTE_ON_STATUS: {
-                if (dataBytes.length < 2) return null;
+                if (dataBytes.length < 2) {return null;}
                 
                 const [note, velocity] = dataBytes;
                 
@@ -317,7 +317,7 @@ export class MidiManager extends EventEmitter {
             }
 
             case MIDI_CONSTANTS.NOTE_OFF_STATUS: {
-                if (dataBytes.length < 2) return null;
+                if (dataBytes.length < 2) {return null;}
                 
                 const [note, velocity] = dataBytes;
                 
@@ -335,7 +335,7 @@ export class MidiManager extends EventEmitter {
             }
 
             case MIDI_CONSTANTS.CONTROL_CHANGE_STATUS: {
-                if (dataBytes.length < 2) return null;
+                if (dataBytes.length < 2) {return null;}
                 
                 const [controller, value] = dataBytes;
                 
@@ -353,7 +353,7 @@ export class MidiManager extends EventEmitter {
             }
 
             case MIDI_CONSTANTS.PROGRAM_CHANGE_STATUS: {
-                if (dataBytes.length < 1) return null;
+                if (dataBytes.length < 1) {return null;}
                 
                 const [value] = dataBytes;
                 
